@@ -22,8 +22,8 @@ const int GreenPin = 5; // RGBのGピン
 const int BluePin = 6; // RGBのBピン
 
 // Wi-Fi接続情報
-//const char* ssid = "ssid";
-//const char* password = "pass";
+const char* ssid = "ssid";
+const char* password = "pass";
 
 // HTTPサーバーの情報
 //const char* serverAddress = "192.168.1.123"; // サーバーアドレス記載例
@@ -115,7 +115,7 @@ void loop() {
   Serial.println(" cm");
   String distStr = String(distance);
   LEDTextDraw(distStr.c_str());
-  delay(5000);
+  delay(4000);
 }
 
 void LEDTextScroll(const char* txt){
@@ -143,32 +143,29 @@ void LEDTextDraw(const char* dist){
 }
 
 void showNear() {
-  ledMatrix.clear();
-  ledMatrix.print("Near");
-//  ledMatrix.display();
+  LEDTextScroll("Near");
+  delay(1000);
 }
 
 void showMiddle() {
-  ledMatrix.clear();
-  ledMatrix.print("Middle");
-//  ledMatrix.display();
+  LEDTextScroll("Middle");
+  delay(1000);
 }
 
 void showFar() {
-  ledMatrix.clear();
-  ledMatrix.print("Far");
-//  ledMatrix.display();
+  LEDTextScroll("Far");
+  delay(1000);
 }
 
 void sendHttpCommand(String distanceStatus) {
   if (WiFi.status() == WL_CONNECTED) {
-    // GETリクエスト用のURLパラメータを構築
+// GETリクエスト用のURLパラメータを作成
 //    String url = String(resource) + "?status=" + distanceStatus;
     String url = String(resource) + "?speech=" + distanceStatus;
 //    String url = "http://192.168.1.123/api/control?speech=あいうえお";
 
     // GETリクエストを送信
-    Serial.println(url);
+//    Serial.println(url);
     httpClient.get(url);
     // レスポンスのステータスコードと本文を取得
     int statusCode = httpClient.responseStatusCode();
